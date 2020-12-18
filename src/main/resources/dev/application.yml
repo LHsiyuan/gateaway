@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+      - id: center-user #
+        uri: lb://user-provider
+        predicates:
+        - Path=/user/**,/account/**
+        filters:
+        - StripPrefix=1
+      - id: we
+        uri: https://www.jd.com/
+        predicates:
+        - Path=/we/**
+        filters:
+        - StripPrefix=1
